@@ -19,9 +19,15 @@ let remeras = [
     {estilo: "chomba", precio: "12000"},
 ]
 
+let tallesPermitidos = ["S", "M", "L", "XL", "XXL"];
+
 function agregarProducto(){
     let estilo = prompt("Ingrese el estilo que desee: oversize , ajustada , remeron o chomba")
     let talle = prompt("Ingrese su talle: S, M, L, XL, XXL");
+    if(!tallesPermitidos.includes(talle)){
+        alert("El talle elegido no se encuentra disponible.");
+        return;
+    }
     let productoEncontrado = remeras.find(producto => producto.estilo === estilo);
 
     if(productoEncontrado){
@@ -31,6 +37,7 @@ function agregarProducto(){
     } else{
         alert("Su producto elegido no se encuentra disponible");
     }
+
 }
 
 function verCarrito(){
@@ -49,10 +56,10 @@ function finalizarCompra(){
     let total = arrayCarrito.reduce((acc, pr) => acc + pr.precio, 0);
     alert ("El total a pagar es de: " + total);
     let decision = prompt("Desea confirmar la compra? \n 1: Si \n 2:No")
-    if (decision === "1"){
-        alert("Gracias por su compra.")
-    } else if (decision === "2"){
+    if (decision === "2"){
         let opcion = prompt("Elija una opción: \n 1: Ver catalogo  \n 2: Comprar remera \n 3: Ver su carrito \n 4: Finalizar la compra \n 5: Salir")
+    } else if (decision === "1"){
+        alert ("Gracias por su compra.");
     } else {
         alert ("Opción invalida");
     }
