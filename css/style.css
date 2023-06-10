@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.navbar{
+    padding: 3vh !important; 
+    background: #80808036;
+}
+.navbar .container-fluid .navbar-brand{
+    font-size: 1.5m;
+}
+.navbar .container-fluid .collapse .navbar-nav .nav-link{
+    font-size: 1em;
+}
+.navbar .container-fluid .collapse .navbar-nav .nav-link .nav-item3 .dropdown-menu{
+    font: 1em;
+}
+
+.navbar .container-fluid .collapse .logo img{
+    width: 50px;
+    height: 50px;
+    margin-right: 50px;
+}
+.navbar .container-fluid .collapse .img_carrito img{
+    margin-right: 3vw;
+    width: 3vw;
+    height: 6.5vh;
+}
+.divisor{
+    margin: 0px;
+    padding: 0px;
+}
+.contenedor-productos{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin: 10vh 10vw;
+    justify-content: space-between;
+}
+.contenedor-productos div {
+    box-shadow: -6px 0px 20px black;
+    margin-bottom: 8vh;
+}
+img{
+    width: 17.84em;
+    height: 23.79em;
+}
+.contenedor-productos .producto{
+    -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.contenedor-productos .producto:hover{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+
+.espacio{
+    margin-bottom: 5vh;
+}
