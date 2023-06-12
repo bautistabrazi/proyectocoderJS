@@ -85,91 +85,214 @@ let stockProductos = [
     }
 ];
 
-
-const contenedorProductos = document.getElementById('contenedor-productos')
-
-const contenedorCarrito = document.getElementById('carrito-contenedor')
-
-const btnVaciar = document.getElementById('vaciar-carrito')
-
 let carrito = [];
 
-if(localStorage.getItem("carrito")){
-    carrito = JSON.parse(localStorage.getItem("carrito"))
+if (localStorage.getItem("carrito de compras")){
+    carrito = JSON.parse(localStorage.getItem("carrito de compras"))
+    dibujarCarrito();
 }
 
-btnVaciar.addEventListener('click', ()=>{
-    carrito.length = 0
-    actualizarCarrito();
+const contenedor = document.getElementById("container");
+stockProductos.forEach((productos, indice) =>{ 
+    let card = document.createElement("div");
+    card.classList.add("card", "col-sm-12", "col-lg-3");
+    card.innerHTML = `<img src="${productos.imagen}" class="card-img-top" alt="remera">
+    <div class="card-body">
+        <h5 class="card-title">${productos.nombre}</h5>
+        <p class="card-text">${productos.precio}</p>
+        <a href="#cart" class="btn btn-info" onClick="agregarAlCarrito(${indice})">Añadir al carrito</a>
+    </div>
+        `;
+    contenedor.appendChild(card);
 })
+const agregarAlCarrito = () =>{
+    const productoClick = carrito.findIndex((elemento)=>{
+        return elemento.id === stockProductos[indice].id;
+    })
+    if (productoClick === -1){
+        const productoAgregado = stockProductos[indice].id;
+        productoAgregado.cantidad = 1
+        carrito.push(productoAgregado);
+        actualizarStorage(carrito)
+        dibujarCarrito(indice);
+    } else {
+        carrito[productoClick].cantidad += 1;
+        actualizarStorage(carrito)
+        dibujarCarrito(indice);
+    }
+}
 
-stockProductos.forEach((producto) => {
-    let div = document.createElement('div');
-    div.classList.add('producto');
-    div.innerHTML = ` 
+const actualizarStorage = (carrito) =>{
+    localStorage.setItem("carrito de compras", JSON.stringify(carrito))
+}
+
+const eliminarProducto = (indice) => {
+    carrito.splice(indice, 1)
+    actualizarStorage()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const funcCarrito = () => {
+  const contCarrito = document.getElementById('contenedor-carrito');
+  if (contCarrito) {
+    contCarrito.innerHTML = "";
+    carrito.forEach((producto) => {
+      const div = document.createElement('div');
+      div.className = "prodAlCarrito";
+      div.innerHTML = `
+        <div>
+          <img src="${producto.imagen}" class="card-img-top" alt="...">
+          <h5>Elección: ${producto.nombre}</h5>
+          <p>Precio: ${producto.precio}</p>
+          <button data-id="${producto.id}" class="btn-eliminar">Eliminar</button>
+        </div>
+        `;
+      contCarrito.appendChild(div);
+    });
+  }
+}
+
+const contenedorProductos = document.getElementById('contenedor-productos');
+stockProductos.forEach((producto, indice) => {
+  let card = document.createElement('div');
+  card.classList.add("card", "col-sm-12", "col-lg-3");
+  card.innerHTML = ` 
     <img src="${producto.imagen}" class= "card-img-top" alt="...">
     <div class="card-body">
-    <h5 class="card-tittle">${producto.nombre}</h5>
-    <p class="card-text">Precio:$ ${producto.precio}</p>
-    <p class="card-text2">Talles: "${producto.talle}"</p>
-    <button id="agregar${producto.id}" class="btn-agregar">Comprar</button>`
+      <h5 class="card-tittle">${producto.nombre}</h5>
+      <p class="card-text">Precio:$ ${producto.precio}</p>
+      <p class="card-text2">Talles: "${producto.talle}"</p>
+      <button id="agregarAlCarrito onClick="AgregarAlCarrito(${indice})" class="btn-agregar">Comprar</button>
+    </div>
+  `;
+  contenedorProductos.appendChild(card);
+});
 
-    contenedorProductos.appendChild(div)
-
-    const boton = document.getElementById(`agregar${producto.id}`)
-
-    boton.addEventListener('click', () => {
-        agregarCarrito(producto.id)
-    })
-
-})
-
-const agregarCarrito = (prodId) => {
-    const existe = carrito.some (prod => prod.id === prodId)
-    if (existe){
-        const prod = carrito.map( prod =>{
-            if (prod.id === prodId){
-                prod.cantidad++;
-            }
-        })
-    }else{
-        const item = stockProductos.find((prod) => prod.id === prodId)
-        carrito.push({id: item.id, cantidad: 1})
-    }
-    actualizarCarrito();
+if (localStorage.getItem("carrito")) {
+  carrito = JSON.parse(localStorage.getItem("carrito"));
+  funcCarrito(indice);
 }
 
-const eliminarDelCarrito = (prodId) =>{
-    const item = carrito.find((prod) => prod.id === prodId)
-    const indice = carrito.indexOf(item)
-    carrito.splice(indice, 1)
-    actualizarCarrito();
+const AgregarAlCarrito = (indice) => {
+  const prodClick = carrito.findIndex((elemento) => {
+    return elemento.id === stockProductos[indice].id;
+  });
+  if (prodClick === -1) {
+    const agregarProd = stockProductos[indice];
+    agregarProd.cantidad = 1;
+    carrito.push(agregarProd);
+    actualizarCarrito(carrito);
+    funcCarrito(indice);
+  } else {
+    carrito[prodClick].cantidad += 1;
+    actualizarCarrito(carrito);
+    funcCarrito(indice);
+  }
 }
 
 const actualizarCarrito = () => {
-  contenedorCarrito.innerHTML = "";
-
-  carrito.forEach((prod) => {
-    const producto = stockProductos.find((item) => item.id === prod.id);
-    const div = document.createElement("div");
-    div.className = "productoEnCarrito";
-    div.innerHTML = `
-      <p>Objeto: ${producto.nombre}</p>
-      <p>Precio: ${producto.precio}</p>
-      <p>Cantidad: <span id="cantidad">${producto.cantidad}</span></p>
-      <button onclick="eliminarDelCarrito(${producto.id})" class="boton-eliminar"></button>
-    `;
-    contenedorCarrito.appendChild(div);
-  });
-
   localStorage.setItem("carrito", JSON.stringify(carrito));
-};
+}
+
+const eliminarProdCarrito = (event) => {
+  const productId = event.target.dataset.id;
+  const prodIndex = carrito.findIndex((producto) => {
+    return producto.id === productId;
+  });
+  if (prodIndex !== -1) {
+    carrito.splice(prodIndex, 1);
+    actualizarCarrito(indice);
+    funcCarrito(indice);
+  }
+} */
 
 
 
 
+/* let carrito = [];
+
+const contenedorCarrito = () => {
+    const contenedorCarrito = document.getElementById('contenedor-carrito');
+    if (contenedorCarrito) {
+      contenedorCarrito.innerHTML = "";
+      carrito.forEach((producto, indice) => {
+        const div = document.createElement('div');
+        div.className = "prodAlCarrito";
+        div.innerHTML = `
+          <div>
+            <img src="${producto.imagen}" class="card-img-top" alt="...">
+            <h5>Elección: ${producto.nombre}</h5>
+            <p>Precio: ${producto.precio}</p>
+            <button id="eliminar-${indice}" class="btn-eliminar">Eliminar</button>
+          </div>
+          `;
+        contenedorCarrito.appendChild(div);
+    })
+    }
+}
+
+const contenedorProductos = document.getElementById('contenedor-productos')
+stockProductos.forEach((producto, indice) => {
+    let card = document.createElement('div');
+    card.classList.add("card", "col-sm-12", "col-lg-3");
+    card.innerHTML = ` 
+    <img src="${producto.imagen}" class= "card-img-top" alt="...">
+    <div class="card-body">
+     <h5 class="card-tittle">${producto.nombre}</h5>
+     <p class="card-text">Precio:$ ${producto.precio}</p>
+     <p class="card-text2">Talles: "${producto.talle}"</p>
+     <button id="agregar${(indice)}" class="btn-agregar">Comprar</button>
+    </div>
+    `;
+    contenedorProductos.appendChild(card)
+});
+
+if(localStorage.getItem("carrito")){
+    carrito = JSON.parse(localStorage.getItem("carrito"))
+    contenedorCarrito();
+}
 
 
+const AgregarAlCarrito = (indice) => {
+    const prodClick = carrito.findIndex((elemento)=>{
+        return elemento.id === stockProductos[indice].id
+    })
+    if(prodClick === -1){
+        const agregarProd = stockProductos[indice];
+        agregarProd.cantidad = 1
+        carrito.push(agregarProd);
+        actualizarCarrito();
+        contenedorCarrito();
+    } else{
+        carrito[prodClick].cantidad += 1;
+        actualizarCarrito();
+        contenedorCarrito();
+    }
+}
+
+const actualizarCarrito = (carrito) => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    
+}
+
+const eliminarProdCarrito = (indice) => {
+    carrito.splice(indice, 1)
+    actualizarCarrito();
+    contenedorCarrito();
+} 
+
+ */
 
 
 
