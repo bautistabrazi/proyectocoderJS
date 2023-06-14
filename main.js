@@ -4,6 +4,7 @@ let stockProductos = [
         nombre: "Oversize I",
         talle: "S, M, L, XL, XXL",
         precio: 8500,
+        precioEnPantalla: "$8.500",
         imagen: "./imagenes/remera1.jpg",
     },
     {
@@ -11,6 +12,7 @@ let stockProductos = [
         nombre: "Oversize II",
         talle: "S, M, L, XL, XXL",
         precio: 8000,
+        precioEnPantalla: "$8.000",
         imagen: "./imagenes/remera2.jpg",
     },
     {
@@ -18,6 +20,7 @@ let stockProductos = [
         nombre: "Oversize III",
         talle: "S, M, L, XL, XXL",
         precio: 8799,
+        precioEnPantalla: "$8.799",
         imagen: "./imagenes/remera3.jpg",
     },
     {
@@ -25,6 +28,7 @@ let stockProductos = [
         nombre: "Ajustada I",
         talle: "S, M, L, XL, XXL",
         precio: 7000,
+        precioEnPantalla: "$7.000",
         imagen: "./imagenes/ajustada1.jpg",
     },
     {
@@ -32,6 +36,7 @@ let stockProductos = [
         nombre: "Ajustada II",
         talle: "S, M, L, XL, XXL",
         precio: 7000,
+        precioEnPantalla: "$7.000",
         imagen: "./imagenes/ajustada2.jpg",
     },
     {
@@ -39,6 +44,7 @@ let stockProductos = [
         nombre: "Ajustada III",
         talle: "S, M, L, XL, XXL",
         precio: 7000,
+        precioEnPantalla: "$7.000",
         imagen: "./imagenes/ajustada3.jpg",
     },
     {
@@ -46,6 +52,7 @@ let stockProductos = [
         nombre: "Chomba I",
         talle: "S, M, L, XL, XXL",
         precio: 12100,
+        precioEnPantalla: "$12.100",
         imagen: "./imagenes/chomba1.jpg",
     },
     {
@@ -53,6 +60,7 @@ let stockProductos = [
         nombre: "Chomba II",
         talle: "S, M, L, XL, XXL",
         precio: 12500,
+        precioEnPantalla: "$12.500",
         imagen: "./imagenes/chomba2.jpg",
     },
     {
@@ -60,6 +68,7 @@ let stockProductos = [
         nombre: "Chomba III",
         talle: "S, M, L, XL, XXL",
         precio: 12900,
+        precioEnPantalla: "$12.900",
         imagen: "./imagenes/chomba3.jpg",
     },
     {
@@ -67,6 +76,7 @@ let stockProductos = [
         nombre: "Remeron I",
         talle: "S, M, L, XL, XXL",
         precio: 11000,
+        precioEnPantalla: "$11.000",
         imagen: "./imagenes/remeron4.jpg",
     },
     {
@@ -74,6 +84,7 @@ let stockProductos = [
         nombre: "Remeron II",
         talle: "S, M, L, XL, XXL",
         precio: 11100,
+        precioEnPantalla: "$11.100",
         imagen: "./imagenes/remeron5.jpg",
     },
     {
@@ -81,340 +92,245 @@ let stockProductos = [
         nombre: "Remeron III",
         talle: "S, M, L, XL, XXL",
         precio: 11200,
+        precioEnPantalla: "$11.200",
         imagen: "./imagenes/remeron6.jpg",
     }
 ];
 
 let carrito = [];
 
+const productosContenedor = document.getElementById("productos-container");
+
+const carritoContenedor = document.getElementById("carrito-container");
+const totalMontoElement = document.getElementById("total-monto");
+
+const vaciarCarrito = () => {
+    carrito = [];
+    dibujarCarrito();
+};
+
+const finalizarCompra = () => {
+    carritoContenedor.innerHTML = `
+    <form id="form-finalizar-compra" class="row g-3">
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4" required>
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="inputPassword4" required>
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Calle</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="Ingrese su dirección" required>
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Depto/Casa/Piso</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Depto, Estudio, Piso" required>
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="inputCity" required>
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Provincia</label>
+          <select id="inputState" class="form-select">
+            <option selected>Buenos Aires</option>
+            <option>Ciudad Autónoma de Buenos Aires</option>
+            <option>Catamarca</option>
+            <option>Chaco</option>
+            <option>Chubut</option>
+            <option>Córdoba</option>
+            <option>Corrientes</option>
+            <option>Entre Ríos</option>
+            <option>Formosa</option>
+            <option>Jujuy</option>
+            <option>La Pampa</option>
+            <option>La Rioja</option>
+            <option>Mendoza</option>
+            <option>Misiones</option>
+            <option>Neuquén</option>
+            <option>Río Negro</option>
+            <option>Salta</option>
+            <option>San Juan</option>
+            <option>San Luis</option>
+            <option>Santa Cruz</option>
+            <option>Santa Fe</option>
+            <option>Santiago del Estero</option>
+            <option>Tierra del Fuego, Antártida e Islas del Atlántico Sur</option>
+            <option>Tucumán</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Codigo Postal</label>
+          <input type="text" class="form-control" id="inputZip" required>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck" >
+            <label class="form-check-label" for="gridCheck">
+              Guardar datos
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" onClick="">Finalizar</button>
+        </div>
+    </form>
+        `
+    const formulario = document.getElementById("form-finalizar-compra")
+    formulario.addEventListener("submit", datosForm);
+};
+
+const datosForm = (evento) => {
+    evento.preventDefault();
+
+    const email = document.getElementById("inputEmail4").value;
+    const contraseña = document.getElementById("inputPassword4").value;
+    const calle = document.getElementById("inputAddress").value;
+    const depto = document.getElementById("inputAddress2").value;
+    const ciudad = document.getElementById("inputCity").value;
+    const provincia = document.getElementById("inputState").value;
+    const codigoPostal = document.getElementById("inputZip").value;
+    
+    const datosCompra = {
+        email: email,
+        contraseña: contraseña,
+        calle: calle,
+        depto: depto,
+        ciudad: ciudad,
+        provincia: provincia,
+        codigoPostal: codigoPostal
+    };
+    const datosCompraJSON = JSON.stringify(datosCompra);
+    localStorage.setItem("datosCompra", datosCompraJSON);
+    
+    carrito = [];
+    actualizarStorage();
+
+    carritoContenedor.innerHTML = `
+    <div class="alert" "alert-success">
+        <h2>"¡Compra realizada con éxito!"</h2>
+    </div>
+    <div>
+        <button class="btn btn-success" onClick="dibujarCarrito()">Volver al carrito</button>
+    </div>
+     `;
+}
+
+const dibujarCarrito = () => {
+    carritoContenedor.innerHTML = "";
+    let totalMonto = 0;
+
+    if (carrito.length === 0) {
+        let carritoVacio = document.createElement("div");
+        carritoVacio.classList.add("card2", "col-sm-12");
+        carritoVacio.innerHTML = `
+            <div class="card-body2">
+                <h3 class="card-title2">El carrito está vacío</h3>
+            </div>
+        `;
+        carritoContenedor.appendChild(carritoVacio);
+        totalMontoElement.textContent = "Total: $0.00";
+
+    } else {
+        carrito.forEach((producto, indice) => {
+            let borrar = document.createElement("div");
+            borrar.classList.add("card2", "col-sm-12");
+            borrar.innerHTML = `
+                <div class="card-body2">
+                    <img src="${producto.imagen}" class="card-img-top" alt="remera">
+                    <h5 class="card-title">${producto.nombre}</h5>
+                    <p class="card-text">$${producto.precio}</p>
+                    <p class="card-text">Cantidad: ${producto.cantidad}</p>
+                    <button class="btn btn-danger" onClick="eliminarProducto(${indice})">Eliminar</button>
+                </div>
+            `;
+            carritoContenedor.appendChild(borrar);
+            totalMonto += producto.precio * producto.cantidad;
+            totalMontoElement.textContent = `Total: $${totalMonto.toFixed(2)}`
+        });
+    } 
+    if (carrito.length > 0){
+        let botonVaciar = document.createElement("button");
+        botonVaciar.classList.add("btn", "btn-danger", "ml-auto");
+        botonVaciar.setAttribute("id", "idButtonV")
+        botonVaciar.textContent = "Vaciar Carrito";
+        botonVaciar.addEventListener("click", vaciarCarrito);
+        carritoContenedor.appendChild(botonVaciar);
+    }
+
+    if (carrito.length > 0){
+        let botonFinalizar = document.createElement("button");
+        botonFinalizar.classList.add("btn", "btn-success", "ml-auto");
+        botonFinalizar.setAttribute("id", "idButtonF")
+        botonFinalizar.textContent = "Finalizar Compra";
+        botonFinalizar.addEventListener("click", finalizarCompra);
+        carritoContenedor.appendChild(botonFinalizar);
+    }
+
+};
+
+const datosGuardados = localStorage.getItem("datosCompra");
+if (datosGuardados){
+    const datosCompra = JSON.parse(datosGuardados);
+    document.getElementById("inputEmail4").value = datosCompra.email;
+    document.getElementById("inputPassword4").value = datosCompra.contraseña;
+    document.getElementById("inputAddress").value = datosCompra.calle;
+    document.getElementById("inputAddress2").value = datosCompra.depto;
+    document.getElementById("inputCity").value = datosCompra.ciudad;
+    document.getElementById("inputState").value = datosCompra.provincia;
+    document.getElementById("inputZip").value = datosCompra.codigoPostal;
+}
+
+
+
+
+
 if (localStorage.getItem("carrito de compras")){
-    carrito = JSON.parse(localStorage.getItem("carrito de compras"))
+    carrito = JSON.parse(localStorage.getItem("carrito de compras"));
     dibujarCarrito();
 }
 
-const contenedor = document.getElementById("container");
-stockProductos.forEach((productos, indice) =>{ 
+stockProductos.forEach((producto, indice) =>{ 
     let card = document.createElement("div");
     card.classList.add("card", "col-sm-12", "col-lg-3");
-    card.innerHTML = `<img src="${productos.imagen}" class="card-img-top" alt="remera">
+    card.innerHTML = `<img src="${producto.imagen}" class="card-img-top" alt="remera">
     <div class="card-body">
-        <h5 class="card-title">${productos.nombre}</h5>
-        <p class="card-text">${productos.precio}</p>
+        <h5 class="card-title">${producto.nombre}</h5>
+        <p class="card-text">${producto.talle}</p>
+        <p class="card-text">${producto.precioEnPantalla}</p>
         <a href="#cart" class="btn btn-info" onClick="agregarAlCarrito(${indice})">Añadir al carrito</a>
     </div>
         `;
-    contenedor.appendChild(card);
-})
-const agregarAlCarrito = () =>{
-    const productoClick = carrito.findIndex((elemento)=>{
+    productosContenedor.appendChild(card);
+});
+
+const agregarAlCarrito = (indice) => {
+    const productoClick = carrito.findIndex((elemento) => {
         return elemento.id === stockProductos[indice].id;
-    })
-    if (productoClick === -1){
-        const productoAgregado = stockProductos[indice].id;
-        productoAgregado.cantidad = 1
+    });
+    if (productoClick === -1) {
+        const productoAgregado = Object.assign({}, stockProductos[indice]);
+        productoAgregado.cantidad = 1;
         carrito.push(productoAgregado);
-        actualizarStorage(carrito)
-        dibujarCarrito(indice);
     } else {
         carrito[productoClick].cantidad += 1;
-        actualizarStorage(carrito)
-        dibujarCarrito(indice);
     }
-}
+    actualizarStorage(carrito);
+    dibujarCarrito();
+};
 
-const actualizarStorage = (carrito) =>{
-    localStorage.setItem("carrito de compras", JSON.stringify(carrito))
-}
+
+const actualizarStorage = () => {
+    localStorage.setItem("carrito de compras", JSON.stringify(carrito));
+};
 
 const eliminarProducto = (indice) => {
-    carrito.splice(indice, 1)
-    actualizarStorage()
-}
+    carrito.splice(indice, 1);
+    actualizarStorage(carrito);
+    carritoContenedor.innerHTML = "";
+    dibujarCarrito(indice);
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* const funcCarrito = () => {
-  const contCarrito = document.getElementById('contenedor-carrito');
-  if (contCarrito) {
-    contCarrito.innerHTML = "";
-    carrito.forEach((producto) => {
-      const div = document.createElement('div');
-      div.className = "prodAlCarrito";
-      div.innerHTML = `
-        <div>
-          <img src="${producto.imagen}" class="card-img-top" alt="...">
-          <h5>Elección: ${producto.nombre}</h5>
-          <p>Precio: ${producto.precio}</p>
-          <button data-id="${producto.id}" class="btn-eliminar">Eliminar</button>
-        </div>
-        `;
-      contCarrito.appendChild(div);
-    });
-  }
-}
-
-const contenedorProductos = document.getElementById('contenedor-productos');
-stockProductos.forEach((producto, indice) => {
-  let card = document.createElement('div');
-  card.classList.add("card", "col-sm-12", "col-lg-3");
-  card.innerHTML = ` 
-    <img src="${producto.imagen}" class= "card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-tittle">${producto.nombre}</h5>
-      <p class="card-text">Precio:$ ${producto.precio}</p>
-      <p class="card-text2">Talles: "${producto.talle}"</p>
-      <button id="agregarAlCarrito onClick="AgregarAlCarrito(${indice})" class="btn-agregar">Comprar</button>
-    </div>
-  `;
-  contenedorProductos.appendChild(card);
-});
-
-if (localStorage.getItem("carrito")) {
-  carrito = JSON.parse(localStorage.getItem("carrito"));
-  funcCarrito(indice);
-}
-
-const AgregarAlCarrito = (indice) => {
-  const prodClick = carrito.findIndex((elemento) => {
-    return elemento.id === stockProductos[indice].id;
-  });
-  if (prodClick === -1) {
-    const agregarProd = stockProductos[indice];
-    agregarProd.cantidad = 1;
-    carrito.push(agregarProd);
-    actualizarCarrito(carrito);
-    funcCarrito(indice);
-  } else {
-    carrito[prodClick].cantidad += 1;
-    actualizarCarrito(carrito);
-    funcCarrito(indice);
-  }
-}
-
-const actualizarCarrito = () => {
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-const eliminarProdCarrito = (event) => {
-  const productId = event.target.dataset.id;
-  const prodIndex = carrito.findIndex((producto) => {
-    return producto.id === productId;
-  });
-  if (prodIndex !== -1) {
-    carrito.splice(prodIndex, 1);
-    actualizarCarrito(indice);
-    funcCarrito(indice);
-  }
-} */
-
-
-
-
-/* let carrito = [];
-
-const contenedorCarrito = () => {
-    const contenedorCarrito = document.getElementById('contenedor-carrito');
-    if (contenedorCarrito) {
-      contenedorCarrito.innerHTML = "";
-      carrito.forEach((producto, indice) => {
-        const div = document.createElement('div');
-        div.className = "prodAlCarrito";
-        div.innerHTML = `
-          <div>
-            <img src="${producto.imagen}" class="card-img-top" alt="...">
-            <h5>Elección: ${producto.nombre}</h5>
-            <p>Precio: ${producto.precio}</p>
-            <button id="eliminar-${indice}" class="btn-eliminar">Eliminar</button>
-          </div>
-          `;
-        contenedorCarrito.appendChild(div);
-    })
-    }
-}
-
-const contenedorProductos = document.getElementById('contenedor-productos')
-stockProductos.forEach((producto, indice) => {
-    let card = document.createElement('div');
-    card.classList.add("card", "col-sm-12", "col-lg-3");
-    card.innerHTML = ` 
-    <img src="${producto.imagen}" class= "card-img-top" alt="...">
-    <div class="card-body">
-     <h5 class="card-tittle">${producto.nombre}</h5>
-     <p class="card-text">Precio:$ ${producto.precio}</p>
-     <p class="card-text2">Talles: "${producto.talle}"</p>
-     <button id="agregar${(indice)}" class="btn-agregar">Comprar</button>
-    </div>
-    `;
-    contenedorProductos.appendChild(card)
-});
-
-if(localStorage.getItem("carrito")){
-    carrito = JSON.parse(localStorage.getItem("carrito"))
-    contenedorCarrito();
-}
-
-
-const AgregarAlCarrito = (indice) => {
-    const prodClick = carrito.findIndex((elemento)=>{
-        return elemento.id === stockProductos[indice].id
-    })
-    if(prodClick === -1){
-        const agregarProd = stockProductos[indice];
-        agregarProd.cantidad = 1
-        carrito.push(agregarProd);
-        actualizarCarrito();
-        contenedorCarrito();
-    } else{
-        carrito[prodClick].cantidad += 1;
-        actualizarCarrito();
-        contenedorCarrito();
-    }
-}
-
-const actualizarCarrito = (carrito) => {
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    
-}
-
-const eliminarProdCarrito = (indice) => {
-    carrito.splice(indice, 1)
-    actualizarCarrito();
-    contenedorCarrito();
-} 
-
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-function saludar(){
-    let usuario;
-    usuario = prompt("Ingresar su nombre");
-    alert("Bienvenido/a, " + usuario + " a la tienda de remeras");
-}
-
-class Producto {
-    constructor (estilo, precio, talle){
-        this.estilo = estilo;
-        this.precio = Number(precio);
-        this.talle = talle;
-    }
-}
-
-let remeras = [
-    {estilo: "oversize", precio: "8000" },
-    {estilo: "ajustada", precio: "7000" },
-    {estilo: "remeron", precio: "11000"},
-    {estilo: "chomba", precio: "12000"},
-]
-
-let tallesPermitidos = ["S", "M", "L", "XL", "XXL"];
-
-function agregarProducto(){
-    let estilo = prompt("Ingrese el estilo que desee: oversize , ajustada , remeron o chomba")
-    let talle = prompt("Ingrese su talle: S, M, L, XL, XXL");
-    if(!tallesPermitidos.includes(talle)){
-        alert("El talle elegido no se encuentra disponible.");
-        return;
-    }
-    let productoEncontrado = remeras.find(producto => producto.estilo === estilo);
-
-    if(productoEncontrado){
-        const nuevaRemera = new Producto (estilo, productoEncontrado.precio, talle);
-        arrayCarrito.push(nuevaRemera);
-        alert("Su producto fue añadido al carrito");
-    } else{
-        alert("Su producto elegido no se encuentra disponible");
-    }
-
-}
-
-function verCarrito(){
-    arrayCarrito.forEach((producto)=>{
-    alert (`eligió el estilo de remera ${producto.estilo}, por un precio de ${producto.precio}, y el talle ${producto.talle} `)
-    });
-}
-
-function VerCatalogo() {
-    remeras.forEach((producto) => {
-        alert(`Producto: ${producto.estilo} - Precio: ${producto.precio}`);
-    });
-}
-
-function finalizarCompra(){
-    let total = arrayCarrito.reduce((acc, pr) => acc + pr.precio, 0);
-    alert ("El total a pagar es de: " + total);
-    let decision = prompt("Desea confirmar la compra? \n 1: Si \n 2:No")
-    if (decision === "2"){
-        let opcion = prompt("Elija una opción: \n 1: Ver catalogo  \n 2: Comprar remera \n 3: Ver su carrito \n 4: Finalizar la compra \n 5: Salir")
-    } else if (decision === "1"){
-        alert ("Gracias por su compra.");
-    } else {
-        alert ("Opción invalida");
-    }
-}
-let arrayCarrito = [];
-saludar();
-let opcion = prompt("Elija una opción: \n 1: Ver catalogo  \n 2: Comprar remera \n 3: Ver su carrito \n 4: Finalizar la compra \n 5: Salir")
-
-while (opcion !== "5"){
-     if (opcion === "1"){
-        VerCatalogo();
-    }
-    if (opcion === "2"){
-        agregarProducto(arrayCarrito);
-    }
-    if (opcion === "3"){
-        verCarrito();
-    }
-    if (opcion === "4"){
-        finalizarCompra();
-    }
-    else if (opcion > 5){
-        alert("Opción no valida");
-    }
-    opcion = prompt ("Ingrese una opción \n 1: Ver catalogo  \n 2: Comprar remera \n 3: Ver su carrito \n 4: Finalizar la compra \n 5: Salir");
-}
-
-alert ("Gracias por su compra " + usuario)
-*/
