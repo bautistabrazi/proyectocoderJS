@@ -180,6 +180,11 @@ const finalizarCompra = () => {
         `
     const formulario = document.getElementById("form-finalizar-compra")
     formulario.addEventListener("submit", datosForm);
+    Swal.fire(
+        '¡Comprada realizada con éxito!',
+        'Para continuar complete el formulario.',
+        'success',
+    )
 };
 
 const datosForm = (evento) => {
@@ -210,7 +215,7 @@ const datosForm = (evento) => {
 
     carritoContenedor.innerHTML = `
     <div class="alert" "alert-success">
-        <h2>"¡Compra realizada con éxito!"</h2>
+        <h2>¡Compra realizada con éxito!</h2>
     </div>
     <div>
         <button class="btn btn-success" onClick="dibujarCarrito()">Volver al carrito</button>
@@ -334,3 +339,27 @@ const eliminarProducto = (indice) => {
 };
 
 
+const boton = document.querySelector ('#gen-user');
+const foto = document.getElementById('foto');
+const nameUser = document.getElementById('nombre-user');
+const correo = document.getElementById('correo-user');
+
+const generarUsuario = async () => {
+    try {
+        const url = 'https://randomuser.me/api/';
+        const respuesta = await fetch(url);
+        const { results } = await respuesta.json();
+        const datos = results [0];
+
+        console.log (datos);
+        foto.src = datos.picture.medium;
+        nameUser.textContent = datos.name.first;
+        correo.textContent = datos.email;
+
+    } catch (error) {
+        console.log (error);
+    }
+
+}
+boton.addEventListener('click', generarUsuario);
+document.addEventListener('DOMContentLoaded', generarUsuario);

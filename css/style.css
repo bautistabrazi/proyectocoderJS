@@ -30,6 +30,43 @@
     margin: 0px;
     padding: 0px;
 }
+.contenedor-user{
+    display: flex;
+    margin: 5vh 0;
+    justify-content: space-evenly;
+    background: #80808036;
+}
+.contenedor-user img{
+    border-radius: 20px;
+}
+.contenedor-user h2{
+    margin: 20px 10px;
+}
+.contenedor-user h3{
+    margin: 20px 10px;
+}
+.bienvenida{
+    font-size: 1.5em;
+}
+.nombre{
+    font-size: 1.5em;
+}
+.correo{
+    font-size: 1.5em;
+}
+.btn-user{
+    display: flex;
+    justify-content: center;
+}
+.btn-user button{
+    border-radius: 30px;
+    padding: 3px 20px;
+    border: 1px solid #00000059;
+    font-weight: bold;
+    font-size: 1em;
+    background-color: #ff0000de;
+}
+
 .productos-container{
     display: grid;
     grid-template-columns: auto auto auto;
